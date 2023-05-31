@@ -59,12 +59,7 @@ const posts = [
 let likedPosts = [];
 
 posts.forEach(post => {
-    const date = new Date(post.created);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const formattedDate = `${day}/${month}/${year}`;
-    post.created = formattedDate;
+    post.created = dateFormatToItalian(post.created);
     createPost('container', post.author.image, post.created, post.author.name, post.content, post.media, post.likes, addElement, addElementNoClass);
 })
 
@@ -125,6 +120,20 @@ function createPost(postsContainer, profilePicSource, dataSource, authorNameSour
     const likesCounter = addElement('div',
     `Piace a <b id="like-counter-1" class="js-likes-counter">${likeSource}</b> persone`,
     'likes__counter', likes);
+}
+
+/**
+ * This function formats the chosen data into the italian format (example 01/01/2000).
+ * @param {*} dateToFormat The date you want to format.
+ * @returns The formatted date.
+ */
+function dateFormatToItalian(dateToFormat) {
+    const date = new Date(dateToFormat);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
 }
 
 /**
