@@ -60,10 +60,14 @@ posts.forEach(post => {
     createPost('container', post.author.image, post.created, post.author.name, post.content, post.media, post.likes, addElement, addElementNoClass);
 })
 
-const likeButtons = document.querySelectorAll('.like-button');
+const likeButtons = document.querySelectorAll('.js-like-button');
+const likesCount = document.querySelectorAll('.js-likes-counter');
 
-    likeButtons.forEach(likeButton => {
+    likeButtons.forEach((likeButton, index) => {
+
         likeButton.addEventListener('click', () => {
+            posts[index].likes++;
+            likesCount[index].innerHTML = posts[index].likes;
             likeButton.classList.add('like-button--liked');
         });
     });
