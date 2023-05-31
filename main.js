@@ -74,15 +74,34 @@ const likesCount = document.querySelectorAll('.js-likes-counter');
 likeButtons.forEach((likeButton, index) => {
 
     likeButton.addEventListener('click', () => {
-        posts[index].likes++;
-        likesCount[index].innerHTML = posts[index].likes;
-        likeButton.classList.add('like-button--liked');
+
+        if (likeButton.classList.contains('like-button--liked')) {
+            posts[index].likes--;
+            likesCount[index].innerHTML = posts[index].likes;
+            likeButton.classList.remove('like-button--liked')
+
+        } else {
+            posts[index].likes++;
+            likesCount[index].innerHTML = posts[index].likes;
+            likeButton.classList.add('like-button--liked');
+        }
 
         if (!likedPosts.includes(posts[index].id)) {
-            
             likedPosts.push(posts[index].id);
+
+        } else {
+            const indexToRemove = likedPosts.indexOf(posts[index].id);
+            if (indexToRemove !== -1) {
+                likedPosts.splice(indexToRemove, 1);
+            }
         }
-        console.log('ID dei post ai quali hai messo "Mi Piace": ' + likedPosts);
+
+        if (likedPosts.length === 0) {
+            console.log('Non hai messo "Mi Piace" ad alcun post.')
+
+        } else {
+            console.log('ID dei post ai quali hai messo "Mi Piace": ' + likedPosts);
+        }
     });
 });
 
@@ -153,10 +172,10 @@ function dateFormatToItalian(dateToFormat) {
  * @returns The name's inizials.
  */
 function getNameInitials(name) {
-        const nameToSplit = name;
-        const nameSplit = name.split(" ");
-        const nameInitials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
-        return nameInitials;
+    const nameToSplit = name;
+    const nameSplit = name.split(" ");
+    const nameInitials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
+    return nameInitials;
 }
 
 /**
