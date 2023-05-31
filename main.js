@@ -59,6 +59,11 @@ const posts = [
 let likedPosts = [];
 
 posts.forEach(post => {
+
+    if (post.author.image === null) {
+        post.author.image = getNameInitials(post.author.name);
+    }
+
     post.created = dateFormatToItalian(post.created);
     createPost('container', post.author.image, post.created, post.author.name, post.content, post.media, post.likes, addElement, addElementNoClass);
 })
@@ -77,7 +82,7 @@ likeButtons.forEach((likeButton, index) => {
             
             likedPosts.push(posts[index].id);
         }
-        console.log('Liked posts ID: ' + likedPosts);
+        console.log('ID dei post ai quali hai messo "Mi Piace": ' + likedPosts);
     });
 });
 
@@ -85,7 +90,7 @@ likeButtons.forEach((likeButton, index) => {
 /* FUNCTIONS */
 
 /**
- * This function dynamically creates a post inside the chosen container, populating it with information taken from an array of objects.
+ * This function dynamically creates a post inside the chosen container, populating it with information taken from an array of objects. If the property profilePicSource is === 2, it means that the user does not have a profile picture and the string is only made by two letters, his name initials. In this case, an h2 will be generated instead of an image.
  * @param {*} postsContainer The container in which the post will be created.
  * @param {*} profilePicSource The url of the user profile pic.
  * @param {*} dataSource The date of publication of the post.
@@ -102,7 +107,13 @@ function createPost(postsContainer, profilePicSource, dataSource, authorNameSour
     const postHeader = addElement('div', '', 'post__header', post);
     const postMeta = addElement('div', '', 'post-meta', postHeader);
     const postMetaIcon = addElement('div', '', 'post-meta__icon', postMeta);
-    const profilePic = addElement('img', '', 'profile-pic', postMetaIcon).src = profilePicSource;
+
+    if (profilePicSource.length === 2) {
+        const profilePic = addElement('h2', profilePicSource, 'profile-pic', postMetaIcon);
+    } else {
+        const profilePic = addElement('img', '', 'profile-pic', postMetaIcon).src = profilePicSource;
+    }
+
     const postMetaData = addElement('div', '', 'post-meta__data', postMeta);
     const postMetaAuthor = addElement('div', authorNameSource, 'post-meta__author', postMetaData);
     const postMetaTime = addElement('div', dataSource, 'post-meta__time', postMetaData);
@@ -123,7 +134,7 @@ function createPost(postsContainer, profilePicSource, dataSource, authorNameSour
 }
 
 /**
- * This function formats the chosen data into the italian format (example 01/01/2000).
+ * This function formats a data into the italian format (example 01/01/2000).
  * @param {*} dateToFormat The date you want to format.
  * @returns The formatted date.
  */
@@ -134,6 +145,18 @@ function dateFormatToItalian(dateToFormat) {
     const year = date.getFullYear();
     const formattedDate = `${day}/${month}/${year}`;
     return formattedDate;
+}
+
+/**
+ * This function, starting from a string containing a first and last name separated by an empty space, returns the two initials.
+ * @param {*} name The name whose initials you want to get. It is necessary that name and surname are separated by an empty space (for example Vito Pizzulli).
+ * @returns The name's inizials.
+ */
+function getNameInitials(name) {
+        const nameToSplit = name;
+        const nameSplit = name.split(" ");
+        const nameInitials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
+        return nameInitials;
 }
 
 /**
