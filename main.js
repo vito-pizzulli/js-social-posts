@@ -56,20 +56,22 @@ const posts = [
     }
 ];
 
-createPost('container');
+posts.forEach(post => createPost('container', posts.image, posts.created, posts.name, posts.content, posts.media, posts.likes));
 
-function createPost(postsContainer, profilePicSource, dataSource, authorSource, textSource, imageSource, likeSource) {
+/* createPost('container', posts.image, posts.created, posts.name, posts.content, posts.media, posts.likes); */
+
+function createPost(postsContainer, profilePicSource, dataSource, authorNameSource, textSource, imageSource, likeSource) {
     const postsList = document.getElementById(postsContainer);
     const post = addElement('div', '', 'post', postsList);
     const postHeader = addElement('div', '', 'post__header', post);
     const postMeta = addElement('div', '', 'post-meta', postHeader);
     const postMetaIcon = addElement('div', '', 'post-meta__icon', postMeta);
-    const profilePic = addElement('img', '', 'profile-pic', postMetaIcon).src(profilePicSource);
-    const postMetaData = addElement('div', dataSource, 'post-meta__data', postMeta);
-    const postMetaAuthor = addElement('div', authorSource, 'post-meta__author', postMetaData);
-    const postMetaTime = addElement('div', '', 'post-meta__time', postMetaData);
+    const profilePic = addElement('img', '', 'profile-pic', postMetaIcon).src = profilePicSource;
+    const postMetaData = addElement('div', '', 'post-meta__data', postMeta);
+    const postMetaAuthor = addElement('div', authorNameSource, 'post-meta__author', postMetaData);
+    const postMetaTime = addElement('div', dataSource, 'post-meta__time', postMetaData);
     const postText = addElement('div', textSource, 'post__text', post);
-    const postImage = addElement('img', '', '', post).src(imageSource);
+    const postImage = addElement('img', '', 'post-image', post).src = imageSource;
     const postFooter = addElement('div', '', 'post__footer', post);
     const likes = addElement('div', '', 'likes', postFooter);
     likes.classList.add('js-likes');
