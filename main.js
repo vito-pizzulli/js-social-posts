@@ -56,6 +56,8 @@ const posts = [
     }
 ];
 
+let likedPosts = [];
+
 posts.forEach(post => {
     createPost('container', post.author.image, post.created, post.author.name, post.content, post.media, post.likes, addElement, addElementNoClass);
 })
@@ -69,6 +71,12 @@ const likesCount = document.querySelectorAll('.js-likes-counter');
             posts[index].likes++;
             likesCount[index].innerHTML = posts[index].likes;
             likeButton.classList.add('like-button--liked');
+
+            if (!likedPosts.includes(posts[index].id)) {
+                
+                likedPosts.push(posts[index].id);
+            }
+            console.log('ID dei post salvati: ' + likedPosts);
         });
     });
 
