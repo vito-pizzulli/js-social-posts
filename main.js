@@ -56,8 +56,17 @@ const posts = [
     }
 ];
 
-posts.forEach(post => createPost('container', post.author.image, post.created, post.author.name, post.content, post.media, post.likes, addElement, addElementNoClass));
+posts.forEach(post => {
+    createPost('container', post.author.image, post.created, post.author.name, post.content, post.media, post.likes, addElement, addElementNoClass);
+})
 
+const likeButtons = document.querySelectorAll('.like-button');
+
+    likeButtons.forEach(likeButton => {
+        likeButton.addEventListener('click', () => {
+            likeButton.classList.add('like-button--liked');
+        });
+    });
 
 /* FUNCTIONS */
 
@@ -90,7 +99,7 @@ function createPost(postsContainer, profilePicSource, dataSource, authorNameSour
     const likes = addElement('div', '', 'likes', postFooter);
     likes.classList.add('js-likes');
     const likesCta = addElement('div',
-    `<a class="like-button  js-like-button" href="#" data-postid="1">
+    `<a class="like-button  js-like-button" href="#" onclick="return false;" data-postid="1">
     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
     <span class="like-button__label">Mi Piace</span></a>`,
     'likes__cta', likes);
