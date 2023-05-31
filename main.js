@@ -59,26 +59,33 @@ const posts = [
 let likedPosts = [];
 
 posts.forEach(post => {
+    const date = new Date(post.created);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    post.created = formattedDate;
     createPost('container', post.author.image, post.created, post.author.name, post.content, post.media, post.likes, addElement, addElementNoClass);
 })
 
 const likeButtons = document.querySelectorAll('.js-like-button');
 const likesCount = document.querySelectorAll('.js-likes-counter');
 
-    likeButtons.forEach((likeButton, index) => {
+likeButtons.forEach((likeButton, index) => {
 
-        likeButton.addEventListener('click', () => {
-            posts[index].likes++;
-            likesCount[index].innerHTML = posts[index].likes;
-            likeButton.classList.add('like-button--liked');
+    likeButton.addEventListener('click', () => {
+        posts[index].likes++;
+        likesCount[index].innerHTML = posts[index].likes;
+        likeButton.classList.add('like-button--liked');
 
-            if (!likedPosts.includes(posts[index].id)) {
-                
-                likedPosts.push(posts[index].id);
-            }
-            console.log('ID dei post salvati: ' + likedPosts);
-        });
+        if (!likedPosts.includes(posts[index].id)) {
+            
+            likedPosts.push(posts[index].id);
+        }
+        console.log('Liked posts ID: ' + likedPosts);
     });
+});
+
 
 /* FUNCTIONS */
 
