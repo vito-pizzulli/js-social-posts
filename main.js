@@ -109,7 +109,7 @@ likeButtons.forEach((likeButton, index) => {
 /* FUNCTIONS */
 
 /**
- * This function dynamically creates a post inside the chosen container, populating it with information taken from an array of objects. If the property profilePicSource is === 2, it means that the user does not have a profile picture and the string is only made by two letters, his name initials. In this case, an h2 will be generated instead of an image.
+ * This function dynamically creates a post inside the chosen container, populating it with information taken from an array of objects. If the property profilePicSource is === 2, it means that the user does not have a profile picture and the string is only made by two letters, his name initials. In this case, it will generated a div containing a span containing the text.
  * @param {*} postsContainer The container in which the post will be created.
  * @param {*} profilePicSource The url of the user profile pic.
  * @param {*} dataSource The date of publication of the post.
@@ -128,7 +128,8 @@ function createPost(postsContainer, profilePicSource, dataSource, authorNameSour
     const postMetaIcon = addElement('div', '', 'post-meta__icon', postMeta);
 
     if (profilePicSource.length === 2) {
-        const profilePic = addElement('h2', profilePicSource, 'profile-pic', postMetaIcon);
+        const profilePicDefaultDiv = addElement('div', '', 'profile-pic-default', postMetaIcon)
+        const profilePicDefault = addElement('span', profilePicSource, 'profile-pic-initials', profilePicDefaultContainer);
     } else {
         const profilePic = addElement('img', '', 'profile-pic', postMetaIcon).src = profilePicSource;
     }
