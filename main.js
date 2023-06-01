@@ -129,7 +129,7 @@ function createPost(postsContainer, profilePicSource, dataSource, authorNameSour
 
     if (profilePicSource.length === 2) {
         const profilePicDefaultDiv = addElement('div', '', 'profile-pic-default', postMetaIcon)
-        const profilePicDefault = addElement('span', profilePicSource, 'profile-pic-initials', profilePicDefaultContainer);
+        const profilePicDefault = addElement('span', profilePicSource, 'profile-pic-initials', profilePicDefaultDiv);
     } else {
         const profilePic = addElement('img', '', 'profile-pic', postMetaIcon).src = profilePicSource;
     }
